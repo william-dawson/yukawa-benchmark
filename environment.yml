@@ -1,6 +1,6 @@
 name: yukawa
 channels:
-  - defaults
+  - conda-forge
 dependencies:
   - compilers
   - libint
