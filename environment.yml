@@ -1,0 +1,13 @@
+name: yukawa
+channels:
+  - defaults
+dependencies:
+  - compilers
+  - libint
+  - eigen
+  - boost
+  - python
+  - matplotlib
+  - scipy
+  - tk
+prefix: /home/wddawson/miniconda3/envs/yukawa
