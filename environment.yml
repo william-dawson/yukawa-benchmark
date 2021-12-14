@@ -9,5 +9,3 @@ dependencies:
   - python
   - matplotlib
   - scipy
-  - tk
-prefix: /home/wddawson/miniconda3/envs/yukawa
