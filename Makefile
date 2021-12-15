@@ -10,15 +10,6 @@ matrices=H2O Lysozyme 6lu7
 $(matrices):
 	./prog input/$@.xyz def2-SVP 1.0 1e-8 output/$@.block output/$@.mtx
 	python viz.py output/$@.mtx output/$@.png
-#H2O:
-#	./prog input/$@.xyz def2-SVP 1.0 1e-8 output/$@.block output/$@.mtx
-#	python viz.py output/$@.mtx output/$@.png
-#Lysozyme:
-#	./prog input/$@.xyz cc-pVDZ 1.0 1e-8 output/$@.block output/$@.mtx
-#	python viz.py output/$@.mtx output/$@.png
-#6lu7:
-#	./prog input/$@.xyz cc-pVDZ 1.0 1e-8 output/$@.block output/$@.mtx
-#	python viz.py output/$@.mtx output/$@.png
 
 clean:
 	rm prog
