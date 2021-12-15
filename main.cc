@@ -14,15 +14,16 @@ using std::vector;
 
 int main(int argc, char *argv[]) {
   // Setup
-  if (argc < 6) {
+  if (argc < 7) {
     throw invalid_argument("Arguments: xyzfile, basis name, gamma, "
-                           "threshold, output");
+                           "threshold, out_block, out_mat");
   }
   string xyzfile = argv[1];
   string bname = argv[2];
   double gamma_val = stod(argv[3]);
   double threshold = stod(argv[4]);
-  string out = argv[5];
+  string out_block = argv[5];
+  string out_mat = argv[6];
   libint2::initialize();
 
   cout << "Parameters:" << endl;
@@ -35,7 +36,9 @@ int main(int argc, char *argv[]) {
   cout << "  "
        << "threshold: " << threshold << endl;
   cout << "  "
-       << "output: " << out << endl;
+       << "output block: " << out_block << endl;
+  cout << "  "
+       << "output matrix: " << out_mat << endl;
 
   // Geometry and Basis
   ifstream ifile(xyzfile);
@@ -98,7 +101,7 @@ int main(int argc, char *argv[]) {
   cout << "  Electrons: " << nel << endl;
 
   // Write out to file
-  ofstream ofile(out);
+  ofstream ofile(out_mat);
   ofile << "%%MatrixMarket matrix coordinate real symmetric" << endl;
   ofile << "%" << endl;
   ofile << basis.nbf() << " " << basis.nbf() << " " << vals.size() << endl;
@@ -106,6 +109,12 @@ int main(int argc, char *argv[]) {
     ofile << rows[i] + 1 << " " << cols[i] + 1 << " " << vals[i] << endl;
   }
   ofile.close();
+  ofstream ofileb(out_block);
+  ofileb << shell_lookup.size() << endl;
+  for (int i = 0; i < shell_lookup.size(); ++i) {
+    ofileb << shell_lookup[i] << endl;
+  }
+  ofileb.close();
 
   // Cleanup
   libint2::finalize();

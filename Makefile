@@ -1,17 +1,24 @@
 CC=g++
-CFLAGS=-O3
+CFLAGS=-O2
 INCLUDE=-I$(CONDA_PREFIX)/include/ -I$(CONDA_PREFIX)/include/eigen3
 LIBS=-lint2
 
 prog: main.cc
 	$(CC) $^ $(CFLAGS) $(INCLUDE) -o $@ $(LIBS)
 
-test:
-	./prog input/H2O.xyz cc-pVDZ 1.0 1e-6 output/H2O.mtx
-	python viz.py output/H2O.mtx output/H2O.png
-test_big:
-	./prog input/Lysozyme.xyz cc-pVDZ 1.0 1e-6 output/Lysozyme.mtx
-	python viz.py output/Lysozyme.mtx output/Lysozyme.png
+matrices=H2O Lysozyme 6lu7
+$(matrices):
+	./prog input/$@.xyz def2-SVP 1.0 1e-8 output/$@.block output/$@.mtx
+	python viz.py output/$@.mtx output/$@.png
+#H2O:
+#	./prog input/$@.xyz def2-SVP 1.0 1e-8 output/$@.block output/$@.mtx
+#	python viz.py output/$@.mtx output/$@.png
+#Lysozyme:
+#	./prog input/$@.xyz cc-pVDZ 1.0 1e-8 output/$@.block output/$@.mtx
+#	python viz.py output/$@.mtx output/$@.png
+#6lu7:
+#	./prog input/$@.xyz cc-pVDZ 1.0 1e-8 output/$@.block output/$@.mtx
+#	python viz.py output/$@.mtx output/$@.png
 
 clean:
 	rm prog
